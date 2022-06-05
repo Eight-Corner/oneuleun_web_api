@@ -3,14 +3,14 @@
     "username": "root",
     "password": "thiskim12!@",
     "database": "diary",
-    "host": "127.0.0.1",
+    "host": "ec2-107-23-80-232.compute-1.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "thiskim12!@",
     "database": "diary_dev",
-    "host": "127.0.0.1",
+    "host": "ec2-107-23-80-232.compute-1.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
