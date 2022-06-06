@@ -1,16 +1,17 @@
 // todo:: true : dev, false: prod
 let isDev = true;
 
+    // HOST: 'localhost',
 let config = {
     dev: {
-        HOST: 'localhost',
+        HOST: 'dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com',
         USER: 'root',
         PASSWORD: 'Thiskim12!@',
     },
     prod: {
-        HOST: 'dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com',
         USER: 'admin',
-        PASSWORD: 'rodtmxj.123'
+        HOST: 'ec2-13-209-21-178.ap-northeast-2.compute.amazonaws.com',
+        PASSWORD: 'Thiskim12!@'
     },
 }
 

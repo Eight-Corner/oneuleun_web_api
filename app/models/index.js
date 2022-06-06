@@ -34,8 +34,8 @@ db.Member = require("./member.model.js")(sequelize, Sequelize);
 
 // db sync
 db.Member.sync({
-    force: process.env.TABLE_CREATE_ALWAYS === 'false', // true : (drop) table 데이터 없어질 수 있음
-    alter: process.env.TABLE_ALTER_SYNC === 'false'     // 개발 끝나면 false로 하기
+    force: process.env.TABLE_CREATE_ALWAYS === 'true', // true : (drop) table 데이터 없어질 수 있음
+    alter: process.env.TABLE_ALTER_SYNC === 'true'     // 개발 끝나면 false로 하기
 })
 
 // db foreignKey 연결

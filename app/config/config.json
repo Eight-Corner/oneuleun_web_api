@@ -15,9 +15,9 @@
   },
   "prod": {
     "username": "admin",
-    "password": "rodtmxj.123",
+    "password": "Thiskim12!@",
     "database": "diary",
-    "host": "dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
