@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended: true}));
 // app.use(cors({
 //     origin: process.env.CORS_ORIGIN,
 // }));
-let isDev = true; // true : dev, false; prod
+let isDev = false; // true : dev, false; prod
 
 let config = {
     dev: {
