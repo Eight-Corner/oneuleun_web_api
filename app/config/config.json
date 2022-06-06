@@ -2,14 +2,14 @@
 {
   "development": {
     "username": "root",
-    "password": "thiskim12!@",
+    "password": "Thiskim12!@",
     "database": "diary",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "thiskim12!@",
+    "password": "Thiskim12!@",
     "database": "diary_dev",
     "host": "127.0.0.1",
     "dialect": "mysql"
