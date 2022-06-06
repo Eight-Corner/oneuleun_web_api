@@ -4,7 +4,7 @@ let isDev = true;
     // HOST: 'localhost',
 let config = {
     dev: {
-        HOST: 'dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com',
+        HOST: 'ec2-54-180-83-21.ap-northeast-2.compute.amazonaws.com',
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
