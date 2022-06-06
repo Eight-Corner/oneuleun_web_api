@@ -5,7 +5,7 @@ let isDev = false;
 let config = {
     dev: {
         HOST: 'dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com',
-        USER: 'root',
+        USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
     prod: {
