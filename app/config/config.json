@@ -1,6 +1,6 @@
 {
   "dev": {
-    "username": "root",
+    "username": "admin",
     "password": "Thiskim12!@",
     "database": "diary",
     "host": "127.0.0.1",
