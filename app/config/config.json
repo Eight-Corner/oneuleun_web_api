@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "thiskim12!@",
+    "password": "Thiskim12!@",
     "database": "diary",
     "host": "ec2-107-23-80-232.compute-1.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "thiskim12!@",
+    "password": "Thiskim12!@",
     "database": "diary_dev",
     "host": "ec2-107-23-80-232.compute-1.amazonaws.com",
     "dialect": "mysql"
