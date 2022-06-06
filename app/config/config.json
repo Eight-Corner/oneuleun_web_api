@@ -1,6 +1,5 @@
-//    "host": "ec2-107-23-80-232.compute-1.amazonaws.com",
 {
-  "development": {
+  "dev": {
     "username": "root",
     "password": "Thiskim12!@",
     "database": "diary",
@@ -10,15 +9,15 @@
   "test": {
     "username": "root",
     "password": "Thiskim12!@",
-    "database": "diary_dev",
+    "database": "diary_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+  "prod": {
+    "username": "admin",
+    "password": "rodtmxj.123",
+    "database": "diary",
+    "host": "dev-diary.cc4cswhxpsvw.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
