@@ -8,7 +8,9 @@ var swaggerDefinition = {
     info : { // 정보 작성
         version: "1.0.0",
         title: "Diary API DOCS",
-        description: "Diary Web API 문서입니다. ",
+        description:
+            "Diary Web API 문서입니다. " +
+            "<br>",
     },
     host : getConfig(key), // base-url
     basePath : "/api" // base path
