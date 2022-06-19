@@ -6,10 +6,3 @@
 
 AWS EC2 / AWS Code Deploy 
 
-
----
-
-dev-diary.kro.kr
-
-
-diary-web.kro.kr
