@@ -1,4 +1,4 @@
-## Diary Web Project
+## 오늘은, 웹 프로젝트
 
 `auth : corner`
 
