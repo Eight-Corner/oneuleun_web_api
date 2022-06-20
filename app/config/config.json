@@ -1,22 +1,22 @@
 {
   "dev": {
-    "username": "admin",
+    "username": "root",
     "password": "Thiskim12!@",
-    "database": "diary",
+    "database": "oneuleun",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "Thiskim12!@",
-    "database": "diary_test",
+    "database": "oneuleun_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "prod": {
-    "username": "admin",
+    "username": "root",
     "password": "Thiskim12!@",
-    "database": "diary",
+    "database": "oneuleun",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
