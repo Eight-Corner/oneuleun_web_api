@@ -39,6 +39,21 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             comment: '사용자 이메일'
         },
+        profile_img_url: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            comment: '사용자 프로필 이미지 URL'
+        },
+        age: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment: '사용자 나이'
+        },
+        brain_structure: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            comment: '사용자 뇌구조(추후 논의)'
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -46,11 +61,13 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Member',
+        modelName: 'member',
     });
     // /* foreignKey 연결
     Member.associate = function (models) {
         Member.hasMany(models.Diary);
+        Member.hasMany(models.Emotion);
+        Member.hasMany(models.MemberFiles);
     };
     return Member;
 };

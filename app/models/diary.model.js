@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    
+
     Diary.init({
         d_no: {
             field: 'd_no',
@@ -19,6 +19,16 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             allowNull: false,
             comment: '일기장 ID',
+        },
+        emoji: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            comment: '일기장 감정 이모지',
+        },
+        wheather: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            comment: '일기장 날씨',
         },
         nickname: {
             type: DataTypes.STRING,
@@ -38,12 +48,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Diary',
+        modelName: 'diary',
+        timestamps: true,
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_general_ci',
     });
-    /* foreignKey 연결
-    Diary.associate = function (models) {
-        Diary.hasMany(models.Tags);
-    };*/
     return Diary;
 };
 
