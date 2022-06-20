@@ -26,7 +26,7 @@ module.exports = {
     getConfig,
     HOST: "localhost",
     PORT: "3306",
-    USER: "root",
+    USER: getConfig('USER'),
     PASSWORD: "Thiskim12!@",
     DB: "oneuleun",
     dialect: "mysql",
