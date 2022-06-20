@@ -27,11 +27,11 @@ let isDev = true; // true : dev, false; prod
 
 let config = {
     dev: {
-        domain: "http://dev-diary.kro.kr",
+        domain: "http://oneuleun-dev.o-r.kr",
         // serverDomain: "",
     },
     prod: {
-        domain: "http://diary-web.kro.kr",
+        domain: "http://oneuleun.o-r.kr",
         // serverDomain: "",
     },
 }
