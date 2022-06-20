@@ -1,6 +1,6 @@
 {
   "dev": {
-    "username": "admin",
+    "username": "root",
     "password": "Thiskim12!@",
     "database": "oneuleun",
     "host": "127.0.0.1",
@@ -14,7 +14,7 @@
     "dialect": "mysql"
   },
   "prod": {
-    "username": "admin",
+    "username": "root",
     "password": "Thiskim12!@",
     "database": "oneuleun",
     "host": "127.0.0.1",
