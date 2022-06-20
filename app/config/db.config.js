@@ -28,7 +28,7 @@ module.exports = {
     PORT: "3306",
     USER: "root",
     PASSWORD: "Thiskim12!@",
-    DB: "diary",
+    DB: "oneuleun",
     dialect: "mysql",
     dialectOptions: {
         charset: "utf8mb4",

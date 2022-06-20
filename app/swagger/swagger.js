@@ -7,9 +7,9 @@ console.log(`isDev: ${isDev}`.yellow, `config: ${getConfig(key)}`.yellow)
 var swaggerDefinition = {
     info : { // 정보 작성
         version: "1.0.0",
-        title: "Diary API DOCS",
+        title: "오늘은 API DOCS",
         description:
-            "Diary Web API 문서입니다. " +
+            "오늘은 Web API 문서입니다. " +
             "<br>",
     },
     host : getConfig(key), // base-url

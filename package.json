@@ -1,7 +1,7 @@
 {
-  "name": "diary_web_api",
+  "name": "oneuleun_web_api",
   "version": "1.0.0",
-  "description": "다이어리 웹 API",
+  "description": "오늘은 웹 API",
   "main": "server.js",
   "scripts": {
     "createDB dev": "sequelize db:create --env dev",
