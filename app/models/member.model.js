@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    
+
     Member.init({
         m_no: {
             field: 'm_no',
@@ -48,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             comment: '사용자 나이'
+        },
+        theme: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: 'spring',
+            comment: '사용자 테마 설정'
         },
         brain_structure: {
             type: DataTypes.STRING,

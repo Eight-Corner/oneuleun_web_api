@@ -30,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             comment: '일기장 날씨',
         },
+        location: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            comment: '위치',
+        },
         nickname: {
             type: DataTypes.STRING,
             unique: true,
