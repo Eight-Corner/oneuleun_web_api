@@ -5,27 +5,20 @@ const {
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class Member extends Model {
+    class Diary extends Model {
         static associate(models) {
             // define association here
         }
     }
     
-    Member.init({
-        m_no: {
-            field: 'm_no',
+    Diary.init({
+        d_no: {
+            field: 'd_no',
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
-            comment: '사용자 ID',
-        },
-        uid: {
-            field: 'uid',
-            type: DataTypes.STRING(255),
-            unique: true,
-            allowNull: false,
-            comment: '사용자 고유 키 값',
+            comment: '일기장 ID',
         },
         nickname: {
             type: DataTypes.STRING,
@@ -33,25 +26,24 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             comment: '사용자 닉네임'
         },
-        email: {
+        title: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false,
-            comment: '사용자 이메일'
+            comment: '일기장 제목'
         },
-        password: {
+        content: {
             type: DataTypes.STRING,
             allowNull: false,
-            comment: '사용자 비밀번호'
+            comment: '일기장 내용'
         },
     }, {
         sequelize,
-        modelName: 'Member',
+        modelName: 'Diary',
     });
-    // /* foreignKey 연결
-    Member.associate = function (models) {
-        Member.hasMany(models.Diary);
-    };
-    return Member;
+    /* foreignKey 연결
+    Diary.associate = function (models) {
+        Diary.hasMany(models.Tags);
+    };*/
+    return Diary;
 };
 
