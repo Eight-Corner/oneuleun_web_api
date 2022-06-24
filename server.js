@@ -64,7 +64,7 @@ app.use(errorHandler);
 
 // 포트넘버 설정
 if (isDev) {
-    process.env.PORT = "80";
+    process.env.PORT = "8080";
 } else {
     process.env.PORT = "80";
 }
