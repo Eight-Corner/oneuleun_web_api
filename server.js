@@ -64,8 +64,10 @@ app.use(errorHandler);
 
 // 포트넘버 설정
 if (isDev) {
+    NODE_ENV = 'development';
     process.env.PORT = "8080";
 } else {
+    NODE_ENV = 'production';
     process.env.PORT = "80";
 }
 const PORT = isDev ? process.env.PORT : process.env.PORT;
