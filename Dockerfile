@@ -20,7 +20,7 @@ FROM node:14.17.0
 #RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
 #    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN npm install -g yarn
+#RUN npm install -g yarn
 RUN npm install -g nodemon
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
