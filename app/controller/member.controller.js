@@ -42,6 +42,7 @@ exports.findOne = async (req, res) => {
             nickname: result.nickname,
             email: result.email,
             age: result.age,
+            profile_img_url: result.profile_img_url,
             createdAt: result.createdAt,
         };
         res.status(200).send({status: 200, result: response, message: "success"});
@@ -56,7 +57,7 @@ exports.findOne = async (req, res) => {
  **********************/
 exports.dupCheckId = async (req, res) => {
     const nickname = req.body.nickname;
-    
+
     await Member.findOne({
         nickname
     }).then((result) => {
@@ -76,7 +77,7 @@ exports.dupCheckId = async (req, res) => {
  **********************/
 exports.dupCheckEmail = async (req, res) => {
     const email = req.body.email;
-    
+
     await Member.findOne({
         email
     }).then((result) => {
@@ -117,15 +118,15 @@ exports.create = async (req, res) => {
     // :: UID, Password Crypto
     let password = req.body.password;
     let uid = req.body.email;
-    
+
     crypto.createHash('sha512').update(password).digest('base64');
     password = crypto.createHash('sha512').update(password).digest('hex');
-    
+
     crypto.createHash('sha512').update(uid).digest('base64');
     uid = crypto.createHash('sha512').update(uid).digest('hex');
-    
+
     const {nickname, email, age} = req.body;
-    
+
     await Member.create({uid, nickname, email, password, age}).then((result) => {
         let info = {
             'type': true,
@@ -146,3 +147,36 @@ exports.create = async (req, res) => {
     });
 };
 
+
+/*****************************8
+ * Developer: corner
+ * Description: 계정 삭제
+ *             회원의 계정을 삭제합니다.
+ *             params : m_no
+*****************************/
+
+exports.delete = async (req, res) => {
+	if (req.query.hasOwnProperty('m_no') && req.query.m_no === '') {
+		return res.status(200).send({
+			status: 400,
+			message: "Error: m_no값이 없습니다.",
+		});
+	}
+	const m_no = req.query.m_no;
+
+    await Member.destroy({
+        where: {
+            m_no: m_no,
+        }
+    }).then((result) => {
+		if (result === 0) {
+			res.status(402).send({
+				status: 402,
+				message: "해당 회원이 없습니다.",
+			})
+		}
+        res.status(200).send({status: 200, message: "success"});
+    }).catch((err) => {
+        res.status(500).json({status: 500, message: err.message});
+    });
+}

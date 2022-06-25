@@ -7,9 +7,11 @@ const controller = require('../controller/member.controller.js');
  * Description : 멤버 관련 라우터
  * *******************/
 // 유저 전체 조회
-router.get("/member", controller.findAll);
+
+// router.get("/member", controller.findAll);
+
 /**
- * @swagger
+ // * @swagger
  * paths:
  *  /member:
  *    get:
@@ -20,6 +22,7 @@ router.get("/member", controller.findAll);
  *        "200":
  *          description: 조회 성공
  */
+
 // 유저 단일 조회
 router.get("/member/:id", controller.findOne);
 /**
@@ -27,8 +30,8 @@ router.get("/member/:id", controller.findOne);
  * paths:
  *  /member/:id:
  *    get:
- *      summary: "유저 데이터 전체조회"
- *      description: "단일 유저 데이터 조회"
+ *      summary: "회원 상세 조회"
+ *      description: "회원 상세 데이터 조회"
  *      tags: [Member]
  *      parameters:
  *        - in: params
@@ -40,9 +43,29 @@ router.get("/member/:id", controller.findOne);
  *        description: '[ "status": 200, "result": { "m_no": 1, "nickname": "기훈쨩", "email": "corner@gmail.com", "createdAt": "2022-05-28T16:49:46.000Z" }, "message": "success" ]'
  *        schema:
  */
+
 // 중복 체크
-router.post("/member/name", controller.dupCheckId)
+// router.post("/member/name", controller.dupCheckId)
+// 이메일 중복체크
 router.post("/member/email", controller.dupCheckEmail)
+/**
+ * @swagger
+ * paths:
+ *  /member/:id:
+ *    get:
+ *      summary: "회원 상세 조회"
+ *      description: "회원 상세 데이터 조회"
+ *      tags: [Member]
+ *      parameters:
+ *        - in: params
+ *          name: m_no
+ *          description: 유저 번호
+ *          required: true
+ *      responses:
+ *       200:
+ *        description: '[ "status": 200, "result": { "m_no": 1, "nickname": "기훈쨩", "email": "corner@gmail.com", "createdAt": "2022-05-28T16:49:46.000Z" }, "message": "success" ]'
+ *        schema:
+ */
 
 
 // 유저 생성
@@ -72,6 +95,29 @@ router.post("/member", controller.create);
  *
  */
 
+// 유저 삭제
+router.delete("/member", controller.delete);
+/**
+ * @swagger
+ * paths:
+ *  /member/:id:
+ *   delete:
+ *   	tags: [Member]
+ *   	summary: 회원 탈퇴
+ *   	parameters:
+ *   		- name:
+ *   			in: params
+ *   			type: string
+ *   			description: 회원 번호
+ *
+ *   	responses:
+ *   		"200":
+ *   			description: 회원 탈퇴 성공
+ *   		"400":
+ *   			description: 잘못된 파라미터 전달
+ *   		"402":
+ *   			description: 회원이 없음
+ * */
 
 
 module.exports = router;
