@@ -9,6 +9,7 @@ var swaggerDefinition = {
         version: "1.0.0",
         title: "오늘은 API DOCS",
         description:
+            "Description :: " +
             "오늘은 Web API 문서입니다. " +
             "<br>",
     },
