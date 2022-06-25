@@ -146,3 +146,22 @@ exports.create = async (req, res) => {
     });
 };
 
+
+/*****************************8
+ * Developer: corner
+ * Description: 계정 삭제
+ *             회원의 계정을 삭제합니다.
+ *             params : m_no
+*****************************/
+
+exports.delete = async (req, res) => {
+    await Member.destroy({
+        where: {
+            m_no: req.params.m_no,
+        }
+    }).then((result) => {
+        res.status(200).send({status: 200, message: "success"});
+    }).catch((err) => {
+        res.status(500).json({status: 500, message: err.message});
+    });
+}
