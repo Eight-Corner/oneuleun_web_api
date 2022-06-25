@@ -112,7 +112,7 @@ exports.create = async (req, res) => {
             message: "Error: Body(JSON)값이 비어있습니다."
         });
     }
-    // TODO:: UID, Password Crypto
+    // :: UID, Password Crypto
     let password = req.body.password;
     let uid = req.body.email;
     
