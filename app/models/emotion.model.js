@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         level: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            comment: '감정 단계: 1 = 희, 2 = 노, 3 = 애, 4 = 락',
+            comment: 'Object: { fun: 재밌음, sad: 슬펐음, angry: 불안, disgust: 불만, fear: 공포, surprise: 놀람, neutral: 무표정 }',
         },
     }, {
         sequelize,

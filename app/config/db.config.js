@@ -8,15 +8,17 @@ let config = {
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
+    /* 개발서버 1개로 통합
     prod: {
         USER: 'admin',
         HOST: 'ec2-13-209-21-178.ap-northeast-2.compute.amazonaws.com',
         PASSWORD: 'Thiskim12!@'
-    },
+    },*/
 }
 
 function getConfig(key) {
-    return isDev ? config.dev[key] : config.prod[key];
+    // return isDev ? config.dev[key] : config.prod[key];
+    return isDev ? config.dev[key] : config.dev[key];
 }
 
 //    "host": "ec2-107-23-80-232.compute-1.amazonaws.com",

@@ -55,11 +55,12 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'spring',
             comment: '사용자 테마 설정'
         },
+        /* 제외
         brain_structure: {
             type: DataTypes.STRING,
             allowNull: false,
             comment: '사용자 뇌구조(추후 논의)'
-        },
+        },*/
         password: {
             type: DataTypes.STRING,
             allowNull: false,
