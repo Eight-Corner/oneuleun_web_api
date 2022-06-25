@@ -27,7 +27,7 @@ let isDev = true; // true : dev, false; prod
 
 let config = {
     dev: {
-        domain: "http://oneuleun-dev.o-r.kr",
+        domain: "http://localhost",
         // serverDomain: "",
     },
     prod: {

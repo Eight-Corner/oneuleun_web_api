@@ -45,14 +45,14 @@ module.exports = (sequelize, DataTypes) => {
             comment: '사용자 프로필 이미지 URL'
         },
         age: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
-            comment: '사용자 나이'
+            comment: '사용자 나이 (문자열)'
         },
         theme: {
             type: DataTypes.STRING,
             allowNull: true,
-            defaultValue: 'spring',
+            defaultValue: '1',
             comment: '사용자 테마 설정'
         },
         /* 제외
