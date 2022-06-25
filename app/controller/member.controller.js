@@ -18,6 +18,7 @@ exports.findAll = async (req, res) => {
                 m_no: value.m_no,
                 nickname: value.nickname,
                 email: value.email,
+                age: value.age,
                 createdAt: value.createdAt,
             });
         });
@@ -40,6 +41,7 @@ exports.findOne = async (req, res) => {
             m_no: result.m_no,
             nickname: result.nickname,
             email: result.email,
+            age: result.age,
             createdAt: result.createdAt,
         };
         res.status(200).send({status: 200, result: response, message: "success"});
@@ -122,9 +124,9 @@ exports.create = async (req, res) => {
     crypto.createHash('sha512').update(uid).digest('base64');
     uid = crypto.createHash('sha512').update(uid).digest('hex');
     
-    const {nickname, email, address} = req.body;
+    const {nickname, email, age} = req.body;
     
-    await Member.create({uid, nickname, email, password, address}).then((result) => {
+    await Member.create({uid, nickname, email, password, age}).then((result) => {
         let info = {
             'type': true,
             message: "success",
@@ -132,7 +134,8 @@ exports.create = async (req, res) => {
         result = {
             "m_no": result.m_no, // 회원 번호
             "nickname": result.nickname, // 회원 닉네임
-            "email": result.email, // 회원 이메일
+            "email": result.email, // 회원 이메일,
+            "age": result.age, // 회원 생년월일
             "createdAt": result.createdAt, // 회원 생성일
         }
         let data = {status:200, data: {result}, info}
