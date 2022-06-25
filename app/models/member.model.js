@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         nickname: {
             type: DataTypes.STRING,
-            unique: true,
+            unique: false,
             allowNull: false,
             comment: '사용자 닉네임'
         },
