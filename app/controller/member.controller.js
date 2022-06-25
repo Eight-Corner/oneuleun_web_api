@@ -76,22 +76,37 @@ exports.dupCheckId = async (req, res) => {
  * Description : 계정 중복체크, email
  **********************/
 exports.dupCheckEmail = async (req, res) => {
+	let info = { type: false, message: '' };
+	let data = { result: null }
+	if (req.body.hasOwnProperty('email') && req.body.email === '') {
+		info.message = "이메일을 입력해주세요.";
+		return res.send({
+			status: 400,
+			data,
+			info
+		});
+	}
     const email = req.body.email;
 
-    await Member.findOne({
+    return await Member.findOne({
         email
     }).then((result) => {
-        let info = { type: result, message: '' }
-        let data = { result}
+		console.log("----------------log")
+		console.log(result)
+		console.log("----------------logend")
+		info = { type: false, message: '' }
+        data = { result }
         if (result) {
+			info.type = false
             info.message = "존재하는 계정"
-            res.status(200).send({status: 200, data, info});
+           return res.status(200).send({status: 200, data, info});
         } else {
+			info.type = true
             info.message = "사용가능"
-            res.status(200).send({status: 200, data, info});
+			return res.status(200).send({status: 200, data, info});
         }
     }).catch((err) => {
-        res.status(500).json({status: 500, message: err.message});
+		return res.status(500).json({status: 500, message: err.message});
     });
 }
 
@@ -102,7 +117,7 @@ exports.dupCheckEmail = async (req, res) => {
  ************************************/
 crypto.randomBytes(64, (err, salt) => {
     crypto.pbkdf2('password', salt.toString('base64'), 100000, 64, 'sha512', (err, key) => {
-        console.log(key.toString('base64'));
+        // console.log(key.toString('base64'));
     });
 });
 /*********************************
@@ -126,6 +141,10 @@ exports.create = async (req, res) => {
     uid = crypto.createHash('sha512').update(uid).digest('hex');
 
     const {nickname, email, age} = req.body;
+
+	this.dupCheckEmail(req, res).then((res) => {
+		console.log('::::::::::::res::::::::::::',res)
+	})
 
     await Member.create({uid, nickname, email, password, age}).then((result) => {
         let info = {
@@ -156,10 +175,14 @@ exports.create = async (req, res) => {
 *****************************/
 
 exports.delete = async (req, res) => {
+	let info = { type: false, message: '' }
+	let data = { result: null }
+	info.message = "Error: m_no값이 없습니다.";
 	if (req.query.hasOwnProperty('m_no') && req.query.m_no === '') {
 		return res.status(200).send({
 			status: 400,
-			message: "Error: m_no값이 없습니다.",
+			data,
+			info,
 		});
 	}
 	const m_no = req.query.m_no;
@@ -169,13 +192,19 @@ exports.delete = async (req, res) => {
             m_no: m_no,
         }
     }).then((result) => {
+		info = { type: false, message: '' }
+		data = { result }
 		if (result === 0) {
+			info.message = "해당 회원이 없습니다.";
 			res.status(402).send({
 				status: 402,
-				message: "해당 회원이 없습니다.",
+				data,
+				info,
 			})
 		}
-        res.status(200).send({status: 200, message: "success"});
+		info.type = true;
+		info.message = "success";
+        res.status(200).send({status: 200, data, info});
     }).catch((err) => {
         res.status(500).json({status: 500, message: err.message});
     });
