@@ -77,33 +77,28 @@ exports.dupCheckId = async (req, res) => {
  **********************/
 exports.dupCheckEmail = async (req, res) => {
 	let info = { type: false, message: '' };
-	let data = { result: null }
 	if (req.body.hasOwnProperty('email') && req.body.email === '') {
 		info.message = "이메일을 입력해주세요.";
 		return res.send({
 			status: 400,
-			data,
 			info
 		});
 	}
     const email = req.body.email;
-
     return await Member.findOne({
-        email
+		where: {
+        	email: email
+		}
     }).then((result) => {
-		console.log("----------------log")
-		console.log(result)
-		console.log("----------------logend")
 		info = { type: false, message: '' }
-        data = { result }
         if (result) {
 			info.type = false
             info.message = "존재하는 계정"
-           return res.status(200).send({status: 200, data, info});
+           	return res.status(200).send({status: 200, info});
         } else {
 			info.type = true
             info.message = "사용가능"
-			return res.status(200).send({status: 200, data, info});
+			return res.status(200).send({status: 200, info});
         }
     }).catch((err) => {
 		return res.status(500).json({status: 500, message: err.message});
@@ -142,10 +137,6 @@ exports.create = async (req, res) => {
 
     const {nickname, email, age} = req.body;
 
-	this.dupCheckEmail(req, res).then((res) => {
-		console.log('::::::::::::res::::::::::::',res)
-	})
-
     await Member.create({uid, nickname, email, password, age}).then((result) => {
         let info = {
             'type': true,
@@ -161,7 +152,6 @@ exports.create = async (req, res) => {
         let data = {status:200, data: {result}, info}
         return res.status(200).send(data);
     }).catch((err) => {
-        console.log(err);
         return res.status(500).send({status: 500, message: err.message});
     });
 };

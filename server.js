@@ -24,7 +24,6 @@ app.use(express.urlencoded({extended: true}));
 //     origin: process.env.CORS_ORIGIN,
 // }));
 db = require("./app/config/db.config.js");
-const isDev = db.isDev;
 
 // const devOrigin = 'http://localhost:3000';
 // const prodOrigin = 'https://';
@@ -50,14 +49,10 @@ app.use(notFound);
 app.use(errorHandler);
 
 // 포트넘버 설정
-if (isDev) {
-    NODE_ENV = 'development';
-    process.env.PORT = "80";
-} else {
-    NODE_ENV = 'production';
-    process.env.PORT = "80";
-}
-const PORT = isDev ? process.env.PORT : process.env.PORT;
+NODE_ENV = 'development';
+process.env.PORT = "80";
+
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`::::::Server up and running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
 });
