@@ -17,7 +17,7 @@
     "username": "admin",
     "password": "Thiskim12!@",
     "database": "oneuleun",
-    "host": "127.0.0.1",
+    "host": "oneuleun.o-r.kr",
     "dialect": "mysql"
   }
 }
