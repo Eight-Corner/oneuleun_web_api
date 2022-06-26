@@ -97,27 +97,7 @@ router.post("/member", controller.create);
 
 // 유저 삭제
 router.delete("/member", controller.delete);
-/**
- * @swagger
- * paths:
- *  /member/:id:
- *   delete:
- *   	tags: [Member]
- *   	summary: 회원 탈퇴
- *   	parameters:
- *   		- name:
- *   			in: params
- *   			type: string
- *   			description: 회원 번호
- *
- *   	responses:
- *   		"200":
- *   			description: 회원 탈퇴 성공
- *   		"400":
- *   			description: 잘못된 파라미터 전달
- *   		"402":
- *   			description: 회원이 없음
- * */
+
 
 
 module.exports = router;

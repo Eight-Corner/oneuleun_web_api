@@ -1,5 +1,5 @@
 // todo:: true : dev, false: prod
-let isDev = false;
+let isDev = true;
 
     // HOST: 'localhost',
 let config = {
@@ -8,15 +8,10 @@ let config = {
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
-    prod: {
-        USER: 'admin',
-        HOST: 'http://oneuleun.o-r.kr',
-        PASSWORD: 'Thiskim12!@'
-    },
 }
 
 function getConfig(key) {
-    return isDev ? config.dev[key] : config.prod[key];
+    return config.dev[key];
     // return isDev ? config.dev[key] : config.dev[key];
 }
 
