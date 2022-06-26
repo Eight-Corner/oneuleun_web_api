@@ -23,26 +23,13 @@ app.use(express.urlencoded({extended: true}));
 // app.use(cors({
 //     origin: process.env.CORS_ORIGIN,
 // }));
-let isDev = true; // true : dev, false; prod
+db = require("./app/config/db.config.js");
+const isDev = db.isDev;
 
-let config = {
-    dev: {
-        domain: "http://localhost",
-        // serverDomain: "",
-    },
-    prod: {
-        domain: "http://oneuleun.o-r.kr",
-        // serverDomain: "",
-    },
-}
-
-function getConfig(key = 'domain') {
-    return isDev ? config.dev[key] : config.prod[key];
-}
 // const devOrigin = 'http://localhost:3000';
 // const prodOrigin = 'https://';
 const corsOptions = {
-    origin: getConfig('domain'),
+    origin: db.getConfig('host'),
     credentials: true
 }
 

@@ -1,5 +1,5 @@
 // todo:: true : dev, false: prod
-let isDev = true;
+let isDev = false;
 
     // HOST: 'localhost',
 let config = {
@@ -8,10 +8,9 @@ let config = {
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
-    // /* 개발서버 1개로 통합
     prod: {
         USER: 'admin',
-        HOST: 'ec2-13-209-21-178.ap-northeast-2.compute.amazonaws.com',
+        HOST: 'http://oneuleun.o-r.kr',
         PASSWORD: 'Thiskim12!@'
     },
 }
