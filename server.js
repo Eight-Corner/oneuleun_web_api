@@ -9,6 +9,12 @@ const cors = require('cors');
 const notFound = require('./app/middleware/notFound');
 const errorHandler = require('./app/middleware/errorHandler');
 
+const passport = require('passport');
+const passportConfig = require('./app/config/passport.js');
+
+app.use(passport.initialize());
+passportConfig();
+
 // database
 const models = require("./app/models/index.js");
 models.sequelize.sync().then(() => {

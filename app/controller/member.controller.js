@@ -22,7 +22,7 @@ exports.findAll = async (req, res) => {
                 createdAt: value.createdAt,
             });
         });
-        res.status(200).send({status: 200, result: response, message: "success"});
+        res.status(200).json({status: 200, result: response, message: "success"});
     }).catch((err) => {
         res.status(500).json({status: 500, message: err.message});
     });
@@ -45,7 +45,7 @@ exports.findOne = async (req, res) => {
             profile_img_url: result.profile_img_url,
             createdAt: result.createdAt,
         };
-        res.status(200).send({status: 200, result: response, message: "success"});
+        res.status(200).json({status: 200, result: response, message: "success"});
     }).catch((err) => {
         res.status(500).json({status: 500, message: err.message});
     });
@@ -62,9 +62,9 @@ exports.dupCheckId = async (req, res) => {
         nickname
     }).then((result) => {
         if (result) {
-            res.status(200).send({status: 200, result: false, message: "중복::존재하는 계정"});
+            res.status(200).json({status: 200, result: false, message: "중복::존재하는 계정"});
         } else {
-            res.status(200).send({status: 200, result: true, message: "사용가능"});
+            res.status(200).json({status: 200, result: true, message: "사용가능"});
         }
     }).catch((err) => {
         res.status(500).json({status: 500, message: err.message});
@@ -79,7 +79,7 @@ exports.dupCheckEmail = async (req, res) => {
 	let info = { type: false, message: '' };
 	if (req.body.hasOwnProperty('email') && req.body.email === '') {
 		info.message = "이메일을 입력해주세요.";
-		return res.send({
+		return res.status(200).json({
 			status: 400,
 			info
 		});
@@ -94,11 +94,11 @@ exports.dupCheckEmail = async (req, res) => {
         if (result) {
 			info.type = false
             info.message = "존재하는 계정"
-           	return res.status(200).send({status: 200, info});
+           	return res.status(200).json({status: 200, info});
         } else {
 			info.type = true
             info.message = "사용가능"
-			return res.status(200).send({status: 200, info});
+			return res.status(200).json({status: 200, info});
         }
     }).catch((err) => {
 		return res.status(500).json({status: 500, message: err.message});
@@ -121,7 +121,7 @@ crypto.randomBytes(64, (err, salt) => {
  *********************************/
 exports.create = async (req, res) => {
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-        res.status(400).send({
+        res.status(400).json({
             message: "Error: Body(JSON)값이 비어있습니다."
         });
     }
@@ -150,9 +150,9 @@ exports.create = async (req, res) => {
             "createdAt": result.createdAt, // 회원 생성일
         }
         let data = {status:200, data: {result}, info}
-        return res.status(200).send(data);
+        return res.status(200).json(data);
     }).catch((err) => {
-        return res.status(500).send({status: 500, message: err.message});
+        return res.status(500).json({status: 500, message: err.message});
     });
 };
 
@@ -169,7 +169,7 @@ exports.delete = async (req, res) => {
 	let data = { result: null }
 	info.message = "Error: m_no값이 없습니다.";
 	if (req.query.hasOwnProperty('m_no') && req.query.m_no === '') {
-		return res.status(200).send({
+		return res.status(200).json({
 			status: 400,
 			data,
 			info,
@@ -186,7 +186,7 @@ exports.delete = async (req, res) => {
 		data = { result }
 		if (result === 0) {
 			info.message = "해당 회원이 없습니다.";
-			res.status(402).send({
+			res.status(402).json({
 				status: 402,
 				data,
 				info,
@@ -194,8 +194,9 @@ exports.delete = async (req, res) => {
 		}
 		info.type = true;
 		info.message = "success";
-        res.status(200).send({status: 200, data, info});
+        res.status(200).json({status: 200, data, info});
     }).catch((err) => {
         res.status(500).json({status: 500, message: err.message});
     });
 }
+
