@@ -76,6 +76,7 @@ module.exports = (sequelize, DataTypes) => {
         Member.hasMany(models.Emotion);
         Member.hasMany(models.MemberFiles);
     };
+
     return Member;
 };
 

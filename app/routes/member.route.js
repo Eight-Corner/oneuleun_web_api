@@ -98,6 +98,4 @@ router.post("/member", controller.create);
 // 유저 삭제
 router.delete("/member", controller.delete);
 
-
-
 module.exports = router;

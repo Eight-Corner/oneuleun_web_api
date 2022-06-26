@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/auth.controller.js');
-
+const auth = require('../middleware/auth');
 
 
 /**********************
@@ -29,6 +29,7 @@ router.post('/auth', controller.login);
  *         description: 로그인 성공
  *
  */
+router.use('/auth', auth.verifyToken);
 router.get('/auth', controller.check);
 
 

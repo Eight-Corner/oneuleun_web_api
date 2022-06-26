@@ -20,6 +20,7 @@ const LocalStrategyOption = {
 };
 
 async function localVerify(email, password, done) {
+	console.log("localVerify----")
 	let user;
 	try {
 		let sql = 'select * from member where email = ?';
