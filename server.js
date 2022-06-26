@@ -9,6 +9,10 @@ const cors = require('cors');
 const notFound = require('./app/middleware/notFound');
 const errorHandler = require('./app/middleware/errorHandler');
 
+const passport = require('passport');
+const passportConfig = require('./app/config/passport.js');
+
+
 // database
 const models = require("./app/models/index.js");
 models.sequelize.sync().then(() => {
@@ -19,6 +23,11 @@ models.sequelize.sync().then(() => {
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+// passport
+app.use(passport.initialize());
+passportConfig();
+
 // cors
 // app.use(cors({
 //     origin: process.env.CORS_ORIGIN,
@@ -51,6 +60,7 @@ app.use(errorHandler);
 // 포트넘버 설정
 NODE_ENV = 'development';
 process.env.PORT = "80";
+process.env.JWT_SECRET = "jwt-secret-key";
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
