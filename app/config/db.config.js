@@ -8,6 +8,11 @@ let config = {
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
+    prod: {
+        HOST: 'http://develop-corner.kro.kr',
+        USER: 'admin',
+        PASSWORD: 'Thiskim12!@',
+    },
 }
 
 function getConfig(key) {
