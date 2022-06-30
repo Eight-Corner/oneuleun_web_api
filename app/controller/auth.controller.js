@@ -94,7 +94,7 @@ exports.login = async (req, res) => {
 						info.message = '로그인 성공';
 
 						return res.status(200).header({
-							'x-access-token': token,
+							'bearer': token,
 						}).json({
 							status: 200,
 							info: info,
