@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+
 /*
 exports.verifyToken = (req, res, next) => {
 	try {
@@ -25,7 +26,7 @@ exports.verifyToken = (req, res, next) => {
 */
 
 exports.verifyToken = (req, res, next) => {
-	const token = req.headers['x-access-token'] || req.query.token
+	const token = req.headers['x-access-token'];
 
 	if (!token) {
 		return res.status(403).json({
@@ -36,7 +37,7 @@ exports.verifyToken = (req, res, next) => {
 
 	// 로그인 성공시 토큰을 발급하는 부분
 	const p = new Promise((resolve, reject) => {
-		jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
+		jwt.verify(token, 'jwt-secret-key', (err, decoded) => {
 			if (err) reject(err);
 			resolve(decoded);
 		})
