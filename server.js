@@ -11,7 +11,8 @@ const errorHandler = require('./app/middleware/errorHandler');
 
 const passport = require('passport');
 const passportConfig = require('./app/config/passport.js');
-
+const logger = require('morgan');
+app.use(logger);
 
 // database
 const models = require("./app/models/index.js");
