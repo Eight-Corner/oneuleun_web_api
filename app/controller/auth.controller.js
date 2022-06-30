@@ -4,42 +4,6 @@ const db = require("../models");
 const Member = db.Member;
 
 const crypto = require('crypto');
-/*
-exports.login = async (req, res, next) => {
-	let info = {type: false, message: ''};
-	try {
-		passport.authenticate('local', { session: false }, (err, user) => {
-			console.log("들어옴!!!1")
-			if (err || !user) {
-				info.type = false
-				info.message = 'Login Failed!'
-				return res.status(400).json({
-					info: info,
-					error: err
-				});
-			}
-			req.login(user, { session: false }, (err) => {
-				if (err) {
-					info.message = 'ERROR'
-					return res.status(500).json({
-						info: info,
-						err: err
-					});
-				}
-				const token = jwt.sign({email: user.email}, 'jwt-secret-key', {expiresIn: '7d'});
-				return res.json({
-					success: true,
-					message: '로그인 성공',
-					token: token
-				});
-
-			})(req, res);
-		});
-	} catch (e) {
-		console.error(e);
-		return next(e);
-	}
-};*/
 
 // password Check
 exports.decipher = (password, key) => {
