@@ -66,7 +66,3 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`::::::Server up and running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
 });
-// const PORT = process.env.PORT || 8081;
-// app.listen(PORT, ()=>{
-//     console.log("Server is running on port 8081.");
-// })
