@@ -1,4 +1,3 @@
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const db = require("../models");
 const Member = db.Member;

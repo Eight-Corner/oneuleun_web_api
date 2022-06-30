@@ -30,13 +30,8 @@ app.use(passport.initialize());
 passportConfig();
 
 // cors
-// app.use(cors({
-//     origin: process.env.CORS_ORIGIN,
-// }));
 db = require("./app/config/db.config.js");
 
-// const devOrigin = 'http://localhost:3000';
-// const prodOrigin = 'https://';
 const corsOptions = {
     origin: db.getConfig('host'),
     credentials: true
