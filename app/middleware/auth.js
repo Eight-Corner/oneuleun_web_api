@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const member = require('../models/member.model.js');
 
 /*
 exports.verifyToken = (req, res, next) => {
@@ -24,9 +25,13 @@ exports.verifyToken = (req, res, next) => {
 
 */
 
-exports.verifyToken = (req, res, next) => {
-	const token = req.headers['x-access-token'] || req.query.token
-
+exports.verifyToken = async (req, res, next) => {
+	const token = req.headers.authorization || req.query.token
+	// const authHeader = req.get('Authorization') || req.query.token;
+	// const token = authHeader.split(' ')[1];
+	console.log("-----------------")
+	console.log("들어옴!!!!!!!!!!!!")
+	console.log("token", token)
 	if (!token) {
 		return res.status(403).json({
 			success: false,
@@ -34,14 +39,43 @@ exports.verifyToken = (req, res, next) => {
 		})
 	}
 
-	// 로그인 성공시 토큰을 발급하는 부분
-	const p = new Promise((resolve, reject) => {
+	let info = {
+		type: false,
+		message: '',
+	}
+
+	// 토큰이 유효한지 검증
+	jwt.verify(token, req.app.get('jwt-secret'), async (err, decoded) => {
+		console.log(err)
+		if (err) {
+			info.message = 'Token이 유효하지 않습니다.';
+			return res.status(401).json({
+				status: 401,
+				info,
+			});
+		}
+		const user = await member.findOne({ where : decoded.email });
+
+		if (!user) {
+			info.message = '유저가 존재하지 않습니다.';
+			return res.status(401).json({
+				status: 401,
+				info
+			});
+		}
+
+		req.email = decoded.email;
+		next();
+	});
+
+	/*const p = new Promise((resolve, reject) => {
 		jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
 			if (err) reject(err);
 			resolve(decoded);
 		})
 	});
-
+*/
+/*
 	const onError = (err) => {
 		res.status(403).json({
 			success: false,
@@ -53,5 +87,6 @@ exports.verifyToken = (req, res, next) => {
 		req.decoded = decoded;
 		next();
 	})
+*/
 
 }
