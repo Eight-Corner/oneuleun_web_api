@@ -4,8 +4,6 @@ const db = require("../models");
 const Member = db.Member;
 
 const crypto = require('crypto');
-const express = require("express");
-const app = express();
 /*
 exports.login = async (req, res, next) => {
 	let info = {type: false, message: ''};
@@ -68,55 +66,66 @@ exports.login = async (req, res) => {
 
 	let org_password = '';
 
-	const check = (user) => {
-		 if (!user) {
-			 info.message = '존재하지 않는 유저입니다.'
-			 res.status(403).json({
-				 status: 403,
-				 info: info,
-			 });
-		 } else {
-			 org_password = user.password;
-			 if (hex_password === org_password) {
-				 const p = new Promise((resolve, reject) => {
-					 jwt.sign({email: user.email}, secret, {expiresIn: '7d'}, (err, token) => {
-						 if (err) {
-							 reject(err);
-						 }
-						 resolve(token);
-					 });
-				 });
-				 return p;
-			 } else {
-				 info.message = '비밀번호가 일치하지 않습니다.'
-				 res.status(403).json({
+	await Member.findOne({
+		where: {email: email}
+	}).then(respond => {
+
+		if (!respond) {
+
+			info.message = '존재하지 않는 유저입니다.'
+			return res.status(403).json({
+				status: 403,
+				info: info,
+			});
+
+		} else {
+
+			org_password = respond.password;
+
+			if (hex_password === org_password) {
+
+				const p = new Promise((resolve, reject) => {
+					jwt.sign({email: respond.email}, secret, {expiresIn: '7d'}, (err, token) => {
+
+						if (err) {
+							reject(err);
+						}
+						resolve(token);
+						info.message = '로그인 성공';
+
+						return res.status(200).header({
+							'bearer': token,
+						}).json({
+							status: 200,
+							info: info,
+							token: token
+						});
+
+					});
+				});
+
+				return p;
+
+			} else {
+
+				info.message = '비밀번호가 일치하지 않습니다.'
+				return res.status(403).json({
 					status: 403,
-					 info: info,
-				 });
-			 }
-		 }
-	}
+					info: info,
+				});
 
-	const respond = (token) => {
-		info.message = '로그인 성공';
-		res.status(200).json({
-			status: 200,
-			info: info,
-			token: token
-		});
-	}
+			}
 
-	const onError = (error) => {
-		info.message = '로그인 실패 <br/>' + error;
-		res.status(500).json({
+		}
+
+	}).catch(err => {
+		info.message = '로그인 실패 <br/>' + err;
+		return res.status(500).json({
 			status: 500,
 			info: info,
-		})
-	}
+		});
+	});
 
-	Member.findOne({
-		where: {email: email}
-	}).then(check).then(respond).catch(onError)
 }
 
 exports.check = (req, res) => {

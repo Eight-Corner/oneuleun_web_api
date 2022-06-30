@@ -11,7 +11,8 @@ const errorHandler = require('./app/middleware/errorHandler');
 
 const passport = require('passport');
 const passportConfig = require('./app/config/passport.js');
-
+// const logger = require('morgan');
+// app.use(logger);
 
 // database
 const models = require("./app/models/index.js");
@@ -66,7 +67,3 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`::::::Server up and running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
 });
-// const PORT = process.env.PORT || 8081;
-// app.listen(PORT, ()=>{
-//     console.log("Server is running on port 8081.");
-// })
