@@ -55,10 +55,9 @@ app.use(errorHandler);
 
 // 포트넘버 설정
 NODE_ENV = 'development';
-process.env.PORT = "8080";
 process.env.JWT_SECRET = "jwt-secret-key";
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`::::::Server up and running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
 });
