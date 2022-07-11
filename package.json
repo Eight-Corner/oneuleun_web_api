@@ -6,7 +6,7 @@
 	"scripts": {
 		"createDB dev": "cd app/ && sequelize db:create --env dev",
 		"dev": "NODE_ENV=development nodemon server.js",
-		"start": "npm i --save-dev && nodemon",
+		"start": "npm i --save-dev && node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"git pull && push": "git pull origin Dev1 && git add . && git commit -am 'updated' && git push"
 	},
