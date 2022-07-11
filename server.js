@@ -41,8 +41,8 @@ app.use(cors(corsOptions));
 // dotenv, colors
 dotenv.config({ path: 'src/config/config.env' });
 
-const swaggerUi = require('swagger-ui-express');
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(require('./app/swagger/swagger')));
+// const swaggerUi = require('swagger-ui-express');
+// app.use('/docs', swaggerUi.serve, swaggerUi.setup(require('./app/swagger/swagger')));
 
 // routes
 const router = require("./app/routes/routes.js");
