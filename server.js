@@ -55,6 +55,7 @@ app.use(errorHandler);
 
 // 포트넘버 설정
 NODE_ENV = 'development';
+process.env.PORT = 80;
 process.env.JWT_SECRET = "jwt-secret-key";
 
 const PORT = process.env.PORT || 8080;
