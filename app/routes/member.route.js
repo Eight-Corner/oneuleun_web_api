@@ -2,100 +2,30 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/member.controller.js');
 
+const auth = require("../middleware/auth");
 /*********************
  * Developer : corner
  * Description : 멤버 관련 라우터
  * *******************/
+
 // 유저 전체 조회
-
-// router.get("/member", controller.findAll);
-
-/**
- // * @swagger
- * paths:
- *  /member:
- *    get:
- *      summary: "유저 데이터 전체조회"
- *      description: "모든 유저 데이터 조회"
- *      tags: [Member]
- *      responses:
- *        "200":
- *          description: 조회 성공
- */
-
+router.get("/", controller.findAll);
 // 유저 단일 조회
-router.get("/member/:id", controller.findOne);
-/**
- * @swagger
- * paths:
- *  /member/:id:
- *    get:
- *      summary: "회원 상세 조회"
- *      description: "회원 상세 데이터 조회"
- *      tags: [Member]
- *      parameters:
- *        - in: params
- *          name: m_no
- *          description: 유저 번호
- *          required: true
- *      responses:
- *       200:
- *        description: '[ "status": 200, "result": { "m_no": 1, "nickname": "기훈쨩", "email": "corner@gmail.com", "createdAt": "2022-05-28T16:49:46.000Z" }, "message": "success" ]'
- *        schema:
- */
-
+router.get("/:id", auth.verifyToken, controller.findOne);
 // 중복 체크
-// router.post("/member/name", controller.dupCheckId)
-// 이메일 중복체크
-router.post("/member/email", controller.dupCheckEmail)
-/**
- * @swagger
- * paths:
- *  /member/:id:
- *    get:
- *      summary: "회원 상세 조회"
- *      description: "회원 상세 데이터 조회"
- *      tags: [Member]
- *      parameters:
- *        - in: params
- *          name: m_no
- *          description: 유저 번호
- *          required: true
- *      responses:
- *       200:
- *        description: '[ "status": 200, "result": { "m_no": 1, "nickname": "기훈쨩", "email": "corner@gmail.com", "createdAt": "2022-05-28T16:49:46.000Z" }, "message": "success" ]'
- *        schema:
- */
-
+router.post("/nick", controller.dupCheckNick)
+router.post("/email", controller.dupCheckEmail)
 
 // 유저 생성
-router.post("/member", controller.create);
-/**
- * @swagger
- * paths:
- *  /member:
- *   post:
- *     tags: [Member]
- *     summary: 회원가입 계정
- *     parameters:
- *       - name:
- *         in: Post
- *         type: string
- *         description: 회원가입 정보(아이디),
- *       - name:
- *          tags: [Member]
- *          summary: 회원가입 계정
- *     responses:
- *       "200":
- *         description: 회원가입 성공
- *         content:
- *           application:json
- *       "400":
- *         description: 잘못된 파라미터 전달
- *
- */
+router.post("/", controller.create);
 
-// 유저 삭제
-router.delete("/member", controller.delete);
+// 유저 수정
+router.put("/:id", auth.verifyToken, controller.update);
+
+// 회원 탈퇴
+router.delete("/:id", auth.verifyToken, controller.delete);
+
+
+
 
 module.exports = router;

@@ -3,9 +3,25 @@ const Member = db.Member;
 // express-crypto
 const crypto = require('crypto');
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+let info = {
+	'type': false,
+	message: "failed",
+}
 
+/**********************
+ * Developer : Corner
+ * Description : 유효성 체크, JSON 형식
+ **********************/
+const emptyJson = (obj) => {
+	return obj.constructor === Object && Object.key(obj).length === 0;
+}
+/**********************
+ * Developer : Corner
+ * Description : 유효성 체크, Properties Check
+ **********************/
+const emptyProperty = (obj, key) => {
+	return !obj.hasOwnProperty(key) || obj[key] === '';
+}
 
 /**********************************
  * Developer : Corner
@@ -22,11 +38,10 @@ exports.findAll = async (req, res) => {
 				m_no: value.m_no,
 				nickname: value.nickname,
 				email: value.email,
-				age: value.age,
 				createdAt: value.createdAt,
 			});
 		});
-		res.status(200).json({status: 200, result: response, message: "success"});
+		res.status(200).send({status: 200, result: response, message: "success"});
 	}).catch((err) => {
 		res.status(500).json({status: 500, message: err.message});
 	});
@@ -39,17 +54,18 @@ exports.findAll = async (req, res) => {
  **********************/
 exports.findOne = async (req, res) => {
 	await Member.findOne({
-		m_no: req.params.m_no,
+		m_no: req.params.id,
 	}).then((result) => {
 		const response = {
+			uid: result.uid,
 			m_no: result.m_no,
 			nickname: result.nickname,
 			email: result.email,
-			age: result.age,
-			profile_img_url: result.profile_img_url,
+			addr: result.addr,
+			addr1: result.addr1,
 			createdAt: result.createdAt,
 		};
-		res.status(200).json({status: 200, result: response, message: "success"});
+		res.status(200).send({status: 200, result: response, message: "success"});
 	}).catch((err) => {
 		res.status(500).json({status: 500, message: err.message});
 	});
@@ -57,19 +73,37 @@ exports.findOne = async (req, res) => {
 
 /**********************
  * Developer : Corner
- * Description : 계정 중복체크, nickname
+ * Description : 계정 닉네임 중복체크, nickname
  **********************/
-exports.dupCheckId = async (req, res) => {
+exports.dupCheckNick = async (req, res) => {
+	if (emptyJson(req.body.constructor) === true) {
+		info.message = "JSON 형식의 데이터를 입력해주세요.";
+		return res.status(200).json({
+			status: 400,
+			info
+		});
+	}
+
+	if (emptyProperty(req.body, 'nickname') === true) {
+		info.message = "닉네임을 입력해주세요.";
+		return res.status(200).json({
+			status: 401,
+			info
+		});
+	}
 	const nickname = req.body.nickname;
 
 	await Member.findOne({
 		nickname
 	}).then((result) => {
-		if (result) {
-			res.status(200).json({status: 200, result: false, message: "중복::존재하는 계정"});
-		} else {
-			res.status(200).json({status: 200, result: true, message: "사용가능"});
+		if (result.nickname === nickname) {
+			info.type = false
+			info.message = "존재하는 계정"
+			return res.status(200).json({status: 201, info});
 		}
+		info.type = true
+		info.message = "사용가능"
+		return res.status(200).json({status: 200, info});
 	}).catch((err) => {
 		res.status(500).json({status: 500, message: err.message});
 	});
@@ -77,38 +111,45 @@ exports.dupCheckId = async (req, res) => {
 
 /**********************
  * Developer : Corner
- * Description : 계정 중복체크, email
+ * Description : 계정 이메일 중복체크, email
  **********************/
 exports.dupCheckEmail = async (req, res) => {
-	let info = {type: false, message: ''};
-	if (req.body.hasOwnProperty('email') && req.body.email === '') {
+
+	if (emptyJson(req.body.constructor) === true) {
+		info.message = "JSON 형식의 데이터를 입력해주세요.";
+		return res.status(200).json({
+			status: 400,
+			info
+		});
+	}
+
+	if (emptyProperty(req.body, 'email') === true) {
 		info.message = "이메일을 입력해주세요.";
 		return res.status(200).json({
 			status: 400,
 			info
 		});
 	}
+
 	const email = req.body.email;
+
 	return await Member.findOne({
 		where: {
 			email: email
 		}
 	}).then((result) => {
-		info = {type: false, message: ''}
-		if (result) {
+		if (result.email === email) {
 			info.type = false
 			info.message = "존재하는 계정"
-			return res.status(200).json({status: 200, info});
-		} else {
-			info.type = true
-			info.message = "사용가능"
-			return res.status(200).json({status: 200, info});
+			return res.status(200).json({status: 201, info});
 		}
+		info.type = true
+		info.message = "사용가능"
+		return res.status(200).json({status: 200, info});
 	}).catch((err) => {
 		return res.status(500).json({status: 500, message: err.message});
 	});
 }
-
 /***********************************
  * Developer: corner
  * Description: Salt 암호화,
@@ -116,7 +157,7 @@ exports.dupCheckEmail = async (req, res) => {
  ************************************/
 crypto.randomBytes(64, (err, salt) => {
 	crypto.pbkdf2('password', salt.toString('base64'), 100000, 64, 'sha512', (err, key) => {
-		// console.log(key.toString('base64'));
+		console.log(key.toString('base64'));
 	});
 });
 /*********************************
@@ -124,12 +165,28 @@ crypto.randomBytes(64, (err, salt) => {
  * Description: 계정 생성
  *********************************/
 exports.create = async (req, res) => {
-	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-		res.status(400).json({
-			message: "Error: Body(JSON)값이 비어있습니다."
+
+	if (emptyJson(req.body.constructor) === true) {
+		info.message = "JSON 형식의 데이터를 입력해주세요.";
+		return res.status(200).json({
+			status: 400,
+			info
 		});
 	}
-	// :: UID, Password Crypto
+
+	let body = req.body;
+	for (let key in body) {
+		if (emptyProperty(body, key) === true) {
+			console.log(emptyProperty(body, key))
+			console.log(body[key])
+			info.message = `${key}가 잘못되었습니다.`;
+			return res.status(200).json({
+				status: 400,
+				info
+			});
+		}
+	}
+
 	let password = req.body.password;
 	let uid = req.body.email;
 
@@ -139,68 +196,112 @@ exports.create = async (req, res) => {
 	crypto.createHash('sha512').update(uid).digest('base64');
 	uid = crypto.createHash('sha512').update(uid).digest('hex');
 
-	const {nickname, email, age} = req.body;
+	const {nickname, email, addr, addr1, birthday} = body;
 
-	await Member.create({uid, nickname, email, password, age}).then((result) => {
-		let info = {
-			'type': true,
-			message: "success",
-		}
+	await Member.create({uid, nickname, email, password, addr, addr1, birthday}).then((result) => {
+		info.type = true;
+		info.message = "success";
 		result = {
 			"m_no": result.m_no, // 회원 번호
 			"nickname": result.nickname, // 회원 닉네임
-			"email": result.email, // 회원 이메일,
-			"age": result.age, // 회원 생년월일
+			"email": result.email, // 회원 이메일
+			"addr": result.addr, // 회원 주소
+			"addr1": result.addr1, // 회원 주소
+			"birthday": result.birthday, // 회원 생년월일
 			"createdAt": result.createdAt, // 회원 생성일
 		}
-		let data = {status: 200, data: {result}, info}
-		return res.status(200).json(data);
+		let data = {status:200, data: {result}, info}
+		return res.status(200).send(data);
 	}).catch((err) => {
-		return res.status(500).json({status: 500, message: err.message});
+		console.log(err);
+		return res.status(500).send({status: 500, message: err.message});
 	});
 };
 
-
-/*****************************8
- * Developer: corner
- * Description: 계정 삭제
- *             회원의 계정을 삭제합니다.
- *             params : m_no
- *****************************/
-
-exports.delete = async (req, res) => {
-	let info = {type: false, message: ''}
-	let data = {result: null}
-	info.message = "Error: m_no값이 없습니다.";
-	if (req.query.hasOwnProperty('m_no') && req.query.m_no === '') {
+/***********************
+ * Developer : Corner
+ * Description : 계정 정보 수정
+ ***********************/
+exports.update = async (req, res) => {
+	if (emptyJson(req.body.constructor) === true) {
+		info.message = "JSON 형식의 데이터를 입력해주세요.";
 		return res.status(200).json({
 			status: 400,
-			data,
-			info,
+			info
 		});
 	}
-	const m_no = req.query.m_no;
 
-	await Member.destroy({
-		where: {
-			m_no: m_no,
+	let body = req.body;
+
+	for (let key in body) {
+		if (emptyProperty(body, key) === true) {
+			info.message = `${key}가 잘못되었습니다.`;
+			return res.status(200).json({
+				status: 400,
+				info
+			});
 		}
-	}).then((result) => {
-		info = {type: false, message: ''}
-		data = {result}
-		if (result === 0) {
-			info.message = "해당 회원이 없습니다.";
-			res.status(402).json({
-				status: 402,
-				data,
-				info,
-			})
+	}
+
+	const { nickname, addr, addr1 } = body;
+	const m_no = req.params.id;
+
+	await Member.update( {nickname, addr, addr1}, { where: { m_no } } ).then((result) => {
+		console.log(result)
+		if (result) {
+			info.type = true;
+			info.message = 'success';
+			return res.status(200).json({
+				status: 200,
+				info
+			});
+		} else {
+			info.type = false;
+			info.message = '정보 수정에 실패하였습니다.';
+			return res.status(200).json({
+				status: 401,
+				info
+			});
 		}
-		info.type = true;
-		info.message = "success";
-		res.status(200).json({status: 200, data, info});
 	}).catch((err) => {
-		res.status(500).json({status: 500, message: err.message});
-	});
+		console.log(err);
+		return res.status(500).send({status: 500, message: err.message});
+	})
+
 }
 
+/************************
+ * Developer : Corner
+ * Description : 계정 정보 삭제
+ * ************************/
+exports.delete = async (req, res, next) => {
+	const m_no = req.params.id;
+	if (!m_no) {
+		info.type = false;
+		info.message = '계정 정보를 삭제하는데 실패하였습니다.';
+		res.status(400).json({
+			status: 400,
+			info
+		});
+	}
+
+	Member.destroy({ where: { m_no } }).then((result) => {
+		if (result == 1) {
+			info.type = true;
+			info.message = 'success';
+			return res.status(200).json({
+				status: 200,
+				info
+			});
+		} else {
+			info.type = false;
+			info.message = '계정 정보를 삭제하는데 실패하였습니다.';
+			res.status(400).json({
+				status: 400,
+				info
+			});
+		}
+	});
+
+
+}
