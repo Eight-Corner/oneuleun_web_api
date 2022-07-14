@@ -1,5 +1,5 @@
 // todo:: true : dev, false: prod
-let isDev = true;
+let isDev = false;
 
     // HOST: 'localhost',
 let config = {
@@ -9,7 +9,7 @@ let config = {
         PASSWORD: 'Thiskim12!@',
     },
     prod: {
-        HOST: 'http://develop-corner.kro.kr',
+        HOST: 'localhost',
         USER: 'admin',
         PASSWORD: 'Thiskim12!@',
     },
