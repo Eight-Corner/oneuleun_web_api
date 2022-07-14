@@ -57,7 +57,6 @@ app.use(errorHandler);
 // production 모드에서는 option 이 truthy한 값
 // development 모드에서는 option 이 falsy한 값
 const {getConfig, isDev} = require("./app/config/db.config.js");
-const https = require("https");
 
 const PORT = isDev ? process.env.PORT : 443;
 const option = {
